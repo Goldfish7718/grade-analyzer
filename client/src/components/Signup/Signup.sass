@@ -1,0 +1,68 @@
+.signup
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+    &__title
+        margin: 2rem
+        font-size: 2rem
+        background: var(--blue-gradient)
+        -webkit-background-clip: text
+        background-clip: text
+        color: transparent
+        text-align: center
+
+    &__heading
+        font-size: 2rem
+        color: #494949
+        text-align: center
+        margin: 4rem
+
+    &__panel
+        background-color: #F0F0F0
+        border-radius: 25px
+        width: 50%
+        margin: 2rem 4rem
+        text-align: center
+
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+
+    &__inputs
+        display: flex
+        justify-content: center
+        align-items: center
+
+        &:nth-child(1)
+            margin-top: 4rem
+            
+
+    &__input
+        width: 40%
+
+    &__button
+        margin: 2rem
+
+        & > img
+            height: 1.5rem
+            width: 1.5rem
+
+    &__login-link-text 
+        color: #494949
+        font-size: 1.6rem
+        text-align: center
+        margin-top: 2rem
+
+        & > span
+            color: #BD00FF
+
+            &:hover
+                text-decoration: underline 2px solid #BD00FF
+                cursor: pointer
+            
+            &:active
+                color: red
+                text-decoration: underline 2px solid red

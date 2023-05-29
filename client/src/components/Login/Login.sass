@@ -1,0 +1,60 @@
+.login
+    height: 100dvh
+    overflow-y: hidden
+
+    &__title
+        margin: 2rem
+        font-size: 2rem
+        background: var(--blue-gradient)
+        -webkit-background-clip: text
+        background-clip: text
+        color: transparent
+
+    &__panel
+        background-color: #F0F0F0
+        padding: 3rem
+        border-radius: 25px
+        width: 30%
+        margin: 2rem 4rem
+
+    &__heading
+        font-size: 2rem
+        color: #494949
+
+    &__inputs
+        display: flex
+        flex-direction: column
+        margin-top: 4rem
+
+    &__signup-link-text
+        color: #494949
+        font-size: 1.6rem
+        text-align: center
+        margin-top: 4rem
+
+        & > span
+            color: #BD00FF
+
+            &:hover
+                text-decoration: underline 2px solid #BD00FF
+                cursor: pointer
+            
+            &:active
+                color: red
+                text-decoration: underline 2px solid red
+
+    &__button-container
+        text-align: center
+        margin-top: 4rem
+
+    &__button
+
+        & > img
+            height: 1.5rem
+            width: 1.5rem
+
+.blue-container
+    margin-left: auto
+    width: 20vw
+    height: 100vh
+    background-color: linear-gradient(to bottom, #5887FF, #80C2FF)

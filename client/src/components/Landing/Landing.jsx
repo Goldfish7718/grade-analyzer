@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './Landing.sass'
 
 import studentGroup from '../../assets/student-group.svg'
@@ -10,6 +11,8 @@ import graph from '../../assets/graph.svg'
 import diamond from '../../assets/diamond.svg'
 
 const Landing = () => {
+
+  const navigate = useNavigate()
 
   return (
     <>
@@ -68,8 +71,8 @@ const Landing = () => {
               <p className="landing__login-subtitle">Create an account today to start using Grade-Analyzer</p>
 
               <div className="landing__user-options">
-                <button className="landing__user-options-item btn">Log in</button>
-                <button className="landing__user-options-item btn">Sign up</button>
+                <button className="landing__user-options-item btn" onClick={() => navigate('/login')}>Log in</button>
+                <button className="landing__user-options-item btn" onClick={() => navigate('/signup')}>Sign up</button>
               </div>
             </div>
 
