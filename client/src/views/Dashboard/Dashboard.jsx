@@ -37,7 +37,7 @@ const Dashboard = () => {
 
                 <hr />
 
-                <div className="dashboard__exam__data">
+                <div className="dashboard__exam__data" onClick={() => navigate('/dashboard/In-semester 2023')}>
                     <h3 className="dashboard__exam__name">In-Semester 2023</h3>
                     <h3 className="dashboard__exam__percent">81.5%</h3>
                     <h3 className="dashboard__exam__total">81.5/100</h3>
