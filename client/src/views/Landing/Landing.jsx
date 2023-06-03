@@ -73,6 +73,7 @@ const Landing = () => {
               <div className="landing__user-options">
                 <button className="landing__user-options-item btn" onClick={() => navigate('/login')}>Log in</button>
                 <button className="landing__user-options-item btn" onClick={() => navigate('/signup')}>Sign up</button>
+                <button className="landing__user-options-item btn" onClick={() => navigate('/dashboard')}>Go to Dashboard</button>
               </div>
             </div>
 

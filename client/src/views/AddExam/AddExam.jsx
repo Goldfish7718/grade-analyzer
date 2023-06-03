@@ -1,8 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/Navbar'
 import './AddExam.sass'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AddExam = () => {
+  
+  const navigate = useNavigate();
+
+  const [examName, setExamName] = useState('');
+  const [decode, setDecode] = useState(null);
+
+  const [error, setError] = useState('');
+  const token = localStorage.getItem('token')
+
+
+  const requestAddExam = async e => {
+    // e.preventDefault()
+    
+    try {
+      const { username } = decode
+      const author = username
+
+      await axios.post('http://localhost:5000/exams/addexam', {
+        examName,
+        author
+      })
+      
+      navigate('/dashboard')
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const requestVerification = async () => {
+    try {
+      if (!token) navigate('/login')
+
+      axios.defaults.headers.common['Authorization'] = token
+      const res = await axios.get('http://localhost:5000/auth/verify')
+
+      setDecode(res.data.decode)
+    } catch (err) {
+      setError(err.response.data.message)
+    }
+  }
+
+  useEffect(() => {
+    requestVerification()
+  }, [])
+
   return (
     <>
       <div className="addexam">
@@ -11,8 +58,8 @@ const AddExam = () => {
             <h1 className="addexam__title-text">Add Exam</h1>
         </div>
         <div className="addexam__input-panel">
-            <input type="text" placeholder='Exam Name' className='addexam__input grey-input' />
-            <button className="addexam__button btn">Add Exam</button>
+            <input onChange={e => setExamName(e.target.value)} type="text" placeholder='Exam Name' className='addexam__input grey-input' />
+            <button onClick={requestAddExam} className="addexam__button btn">Add Exam</button>
         </div>
       </div>
     </>
