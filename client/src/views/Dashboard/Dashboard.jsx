@@ -17,6 +17,10 @@ const Dashboard = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const [totalPercentage, setTotalPercentage] = useState([]);
+  const [totalAchievable, setTotalAchievable] = useState([]);
+  const [totalObtained, setTotalObtained] = useState([]);
+
   const requestVerification = async () => {
     try {
       if (!token) {
@@ -27,7 +31,6 @@ const Dashboard = () => {
       const res = await axios.get('http://localhost:5000/auth/verify')
 
       setDecode(res.data.decode)
-      console.log(res);
     } catch (err) {
       setError(err.response.data.message)
     }
@@ -39,9 +42,26 @@ const Dashboard = () => {
     try {
       const res = await axios.get(`http://localhost:5000/exams/${decode.id}/getexams`)
       setData(res.data.examData)
+
+      if (res.data.examData.length != 0) {
+        for (let i = 0; i < res.data.totalPercentage.length; i++) {
+          const parsed = parseFloat(res.data.totalPercentage[i])
+          
+          if (isNaN(parsed))
+          totalPercentage.push(res.data.totalPercentage[i])
+          else
+          totalPercentage.push(parsed)
+        }
+      }
+
+      setTotalAchievable(res.data.totalAchievable)
+      setTotalObtained(res.data.totalObtained)
+
     } catch (err) {
       setError(err.response.data.message)
+      // console.log(err);
     }
+    
     setLoading(false)
   }
 
@@ -51,7 +71,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     requestExamData()
-    console.log(data);
   }, [decode])
   
   return (
@@ -86,10 +105,10 @@ const Dashboard = () => {
               
                 {data.map(dataSet => (
                 <>
-                  <div key={dataSet._id} className="dashboard__exam__data" onClick={() => navigate('/dashboard/In-semester 2023')}>
+                  <div key={dataSet._id} className="dashboard__exam__data" onClick={() => navigate(`/dashboard/${dataSet._id}`)}>
                       <h3 className="dashboard__exam__name">{dataSet.examName}</h3>
-                      <h3 className="dashboard__exam__percent">81.5%</h3>
-                      <h3 className="dashboard__exam__total">81.5/100</h3>
+                      <h3 className="dashboard__exam__percent">{typeof totalPercentage[data.indexOf(dataSet)] == 'number' ? `${totalPercentage[data.indexOf(dataSet)]}%` : totalPercentage[data.indexOf(dataSet)]}</h3>
+                      <h3 className="dashboard__exam__total">{typeof totalAchievable[data.indexOf(dataSet)] == 'number' ? `${totalObtained[data.indexOf(dataSet)]}/${totalAchievable[data.indexOf(dataSet)]}` : totalAchievable[data.indexOf(dataSet)]}</h3>
                   </div>
                   <hr />
                 </>

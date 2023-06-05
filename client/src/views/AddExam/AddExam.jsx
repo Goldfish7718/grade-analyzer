@@ -14,10 +14,7 @@ const AddExam = () => {
   const [error, setError] = useState('');
   const token = localStorage.getItem('token')
 
-
-  const requestAddExam = async e => {
-    // e.preventDefault()
-    
+  const requestAddExam = async () => {    
     try {
       const { username } = decode
       const author = username
@@ -26,11 +23,10 @@ const AddExam = () => {
         examName,
         author
       })
-      
-      navigate('/dashboard')
+
     } catch (err) {
       console.log(err);
-    }
+    } 
   }
 
   const requestVerification = async () => {
@@ -46,6 +42,10 @@ const AddExam = () => {
     }
   }
 
+  const navigateDashboard = () => {
+    navigate('/dashboard')
+  }
+
   useEffect(() => {
     requestVerification()
   }, [])
@@ -59,7 +59,7 @@ const AddExam = () => {
         </div>
         <div className="addexam__input-panel">
             <input onChange={e => setExamName(e.target.value)} type="text" placeholder='Exam Name' className='addexam__input grey-input' />
-            <button onClick={requestAddExam} className="addexam__button btn">Add Exam</button>
+            <button onClick={() => {requestAddExam(); navigateDashboard();}} className="addexam__button btn">Add Exam</button>
         </div>
       </div>
     </>
