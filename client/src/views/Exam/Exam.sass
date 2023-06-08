@@ -1,3 +1,4 @@
+// OVERALL STYLES
 .exam
     background: #E9E9E9
     min-height: 100vh
@@ -36,9 +37,65 @@
     &__subject-submit
         padding: 1.5rem
 
+    // DANGER ZONE STYLES
+
+    &__danger-zone-container
+        margin: 2rem
+        padding: 2rem
+        background-color: #D9D9D9
+        border-radius: 15px
+
+    &__danger-zone
+        display: flex
+
+        align-items: center
+        justify-content: space-around
+    
+    &__name-edit-container
+        display: flex
+        align-items: center
+
+    &__name-edit-input
+        background-color: #B3B3B3
+
+    &__edit-img
+        height: 2rem
+        width: 2rem
+        color: white
+    
+    &__edit-button
+        padding: 3rem
+        height: 80%
+
+    &__delete
+        margin-left: auto
+        margin-inline: 4rem
+
+    &__delete-button
+        padding: 2rem
+        color: red
+        border: 2px solid red
+        outline: none
+
+        font-size: 1.5rem
+        transition: all .2s
+
+        &:hover
+            background-color: red
+            color: white
+            cursor: pointer
+
+    &__delete-confirm-options
+        text-align: center
+
+    &__delete-yes
+        margin-inline: 2rem
+
 hr
     margin-inline: 3rem
 
+
+// SUBJECT DATA STYLES
 .dashboard__subject
 
     &__data
@@ -54,3 +111,10 @@ hr
             font-size: 2rem
             font-weight: 300
             color: #3F3F3F
+
+.dashboard
+    
+    &__subject-option
+        padding: .5rem 2rem
+        box-shadow: none
+        margin: 0 2rem

@@ -4,6 +4,8 @@ import calcPercent from '../middleware/calcPercent.js'
 import calcTotal from '../middleware/calcTotal.js'
 import calcTotalMarks from '../middleware/calcTotalMarks.js'
 
+
+// EXAM CONTROLLERS
 export const addExam = async (req, res) => {
     try {
         const { examName, author } = req.body
@@ -95,6 +97,43 @@ export const getExams = async (req, res) => {
     }
 }
 
+export const updateExam = async (req, res) => {
+    try {
+        const examID = req.params.examid
+        const { newName } = req.body
+
+        await Exam.findOneAndUpdate({ _id: examID }, { examName: newName })
+
+        res
+            .status(200)
+            .json({ message: "Updated Succesfully" })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const deleteExam = async (req, res) => {
+    try {
+        const examID = req.params.examid
+        const exam = await Exam.findById(examID)
+        const { author } = exam
+
+        await Exam.findOneAndRemove({ _id: examID })
+        await User.findOneAndUpdate(
+            { username: author },
+            { $pull: {exams: { _id: examID } }},
+            { new: true }
+        )
+
+        res
+            .status(200)
+            .json({ message: "Deleted succesfully" })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+// SUBJECT CONTROLLERS
 export const addSubject = async (req, res) => {
     try {
         const examID = req.params.examid
@@ -140,6 +179,56 @@ export const getSubjects = async (req, res) => {
         res
             .status(200)
             .json({ subjects, examName })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const deleteSubject = async (req, res) => {
+    try {
+        const examID = req.params.examid
+        const subjectID = req.params.subjectid
+
+        const exam = await Exam.findOneAndUpdate(
+            { _id: examID},
+            { $pull: {subjects: { _id: subjectID } } },
+            { new: true }
+            )
+
+        res
+            .status(200)
+            .json(exam.subjects)
+        
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const updateSubject = async (req, res) => {
+    try {
+        const examID = req.params.examid
+        const subjectID = req.params.subjectid
+        
+        const { updatedFields, updatedValues } = req.body
+        let exam;
+
+        for (let i = 0; i < updatedFields.length; i++) {
+            exam = await Exam.findOneAndUpdate(
+                { _id: examID, "subjects._id": subjectID },
+                { $set: { [`subjects.$.${updatedFields[i]}`]: updatedValues[i] } },
+                { new: true }
+                );
+        }
+
+        const subject = exam.subjects.find(subject => subject._id == subjectID)
+        subject.percentage = calcPercent(subject.achievableScore, subject.obtainedScore)
+
+        await exam.save()
+
+        res
+            .status(200)
+            .json({ message: "Updated Succesfully" })
+
     } catch (err) {
         console.log(err);
     }
