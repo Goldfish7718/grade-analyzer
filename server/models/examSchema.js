@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const examSchema = new mongoose.Schema({
-    examName: {
+    examName: { 
         required: true,
         type: String
     },

@@ -1,6 +1,7 @@
 import User from '../models/userSchema.js'
 import bcrypt from 'bcrypt';
 import generateToken from '../middleware/generateToken.js'
+import Exam from '../models/examSchema.js';
 
 export const loginUser = async (req, res) => {
 
@@ -109,5 +110,24 @@ export const signupUser = async (req, res) => {
             .json({
                 message: "Internal Server Error"
             })
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+        const userID = req.params.userid
+        const user = await User.findById(userID)
+
+        for (let i = 0; i < user.exams.length; i++) {
+            await Exam.findByIdAndRemove(user.exams[i]._id)
+        }
+
+        await User.findByIdAndRemove(userID)
+
+        res
+            .status(200)
+            .json({ message: "Deleted Succesfully" })
+    } catch (err) {
+        console.log(err);
     }
 }
