@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Login.sass'
-
 import linkTo from '../../assets/link-to.svg'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { API_URL } from '../../App'
 
 const Login = () => {
 
@@ -16,7 +16,7 @@ const Login = () => {
 
     const requestLogin = async e => {
         try {
-            const res = await axios.post('http://localhost:5000/auth/login', {
+            const res = await axios.post(`${API_URL}/auth/login`, {
                 username,
                 password
             })            
@@ -24,7 +24,8 @@ const Login = () => {
             localStorage.setItem('token', `Bearer ${token}`)
             navigate('/dashboard')
         } catch (err) {
-            setError(err.response.data.message)
+            // setError(err.response.data.message)
+            console.log(err);
         }
     }
 

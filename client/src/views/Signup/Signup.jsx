@@ -4,6 +4,7 @@ import './Signup.sass'
 import linkTo from '../../assets/link-to.svg'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { API_URL } from '../../App'
 
 const Signup = () => {
 
@@ -19,7 +20,7 @@ const Signup = () => {
     const requestSignup = async e => {
         e.preventDefault()
         try {
-            const res = await axios.post('http://localhost:5000/auth/signup', {
+            const res = await axios.post(`${API_URL}/auth/signup`, {
                 fName,
                 lName,
                 username,
