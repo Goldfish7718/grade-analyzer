@@ -4,6 +4,7 @@ import coffeeTime from '../../assets/coffe time-6010.svg'
 import './Dashboard.sass'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { API_URL } from '../../App'
 
 const Dashboard = () => {
 
@@ -28,7 +29,7 @@ const Dashboard = () => {
       }
 
       axios.defaults.headers.common['Authorization'] = token
-      const res = await axios.get('http://localhost:5000/auth/verify')
+      const res = await axios.get(`${API_URL}/auth/verify`)
 
       setDecode(res.data.decode)
     } catch (err) {
@@ -40,7 +41,7 @@ const Dashboard = () => {
     setLoading(true)
 
     try {
-      const res = await axios.get(`http://localhost:5000/exams/${decode.id}/getexams`)
+      const res = await axios.get(`${API_URL}/exams/${decode.id}/getexams`)
       setData(res.data.examData)
 
       if (res.data.examData.length != 0) {

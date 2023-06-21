@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar'
 import './AddExam.sass'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../../App';
 
 const AddExam = () => {
   
@@ -19,7 +20,7 @@ const AddExam = () => {
       const { username } = decode
       const author = username
 
-      await axios.post('http://localhost:5000/exams/addexam', {
+      await axios.post(`${API_URL}/exams/addexam`, {
         examName,
         author
       })
@@ -34,7 +35,7 @@ const AddExam = () => {
       if (!token) navigate('/login')
 
       axios.defaults.headers.common['Authorization'] = token
-      const res = await axios.get('http://localhost:5000/auth/verify')
+      const res = await axios.get(`${API_URL}/auth/verify`)
 
       setDecode(res.data.decode)
     } catch (err) {

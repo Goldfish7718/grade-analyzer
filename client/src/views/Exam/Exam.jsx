@@ -6,6 +6,7 @@ import pencilToSquare from '../../assets/pencil-to-square.svg'
 import trash from '../../assets/trash.svg'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
+import { API_URL } from '../../App'
 
 const Exam = () => {
 
@@ -41,7 +42,7 @@ const Exam = () => {
             const floatAchievableScore = parseFloat(achievableScore)
             const floatObtainedScore = parseFloat(obtainedScore)
 
-            await axios.post(`http://localhost:5000/exams/${exam}/addsubject`, {
+            await axios.post(`${API_URL}/exams/${exam}/addsubject`, {
                 subjectName,
                 achievableScore: floatAchievableScore,
                 obtainedScore: floatObtainedScore
@@ -56,7 +57,7 @@ const Exam = () => {
         setIsLoading(true)
         try {
             axios.defaults.headers.common['Authorization'] = localStorage.getItem('token')
-            const res = await axios.get(`http://localhost:5000/exams/${exam}`)
+            const res = await axios.get(`${API_URL}/exams/${exam}`)
 
             setSubjectData(res.data.subjects)
             setTitle(res.data.examName)
@@ -77,7 +78,7 @@ const Exam = () => {
     const requestSubjectDelete = async (e, subjectID) => {
         e.preventDefault()
         try {
-            await axios.delete(`http://localhost:5000/exams/deletesub/${exam}/${subjectID}`)
+            await axios.delete(`${API_URL}/exams/deletesub/${exam}/${subjectID}`)
             window.location.reload()
         } catch (err) {
             console.log(err);
@@ -101,7 +102,7 @@ const Exam = () => {
             
             console.log(updatedFields, updatedValues);
 
-            await axios.patch(`http://localhost:5000/exams/updatesub/${exam}/${subjectID}`, {
+            await axios.patch(`${API_URL}/exams/updatesub/${exam}/${subjectID}`, {
                 updatedFields,
                 updatedValues
             })
@@ -114,7 +115,7 @@ const Exam = () => {
     const requestExamUpdate = async e => {
         e.preventDefault()
         try {
-            await axios.patch(`http://localhost:5000/exams/updateexam/${exam}`, {
+            await axios.patch(`${API_URL}/exams/updateexam/${exam}`, {
                 newName
             })
             window.location.reload()
@@ -126,7 +127,7 @@ const Exam = () => {
     const requestExamDelete = async e => {
         e.preventDefault()
         try {
-            await axios.delete(`http://localhost:5000/exams/deleteexam/${exam}`)
+            await axios.delete(`${API_URL}/exams/deleteexam/${exam}`)
             navigate('/dashboard')
         } catch (err) {
             console.log(err);

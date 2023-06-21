@@ -1,4 +1,5 @@
 import axios from "axios"
+import { API_URL } from "../App"
 
 const requestVerification = async () => {
     try {
@@ -8,7 +9,7 @@ const requestVerification = async () => {
       }
 
       axios.defaults.headers.common['Authorization'] = token
-      const res = await axios.get('http://localhost:5000/auth/verify')
+      const res = await axios.get(`${API_URL}/auth/verify`)
 
       const { decode } = res.data
       return decode;
