@@ -102,7 +102,7 @@ export const signupUser = async (req, res) => {
         .status(200)
         .json({
             token,
-            message: 'Login Success'
+            message: 'signup Success'
         })
 
     } catch (err) {
@@ -111,6 +111,7 @@ export const signupUser = async (req, res) => {
             .json({
                 message: "Internal Server Error"
             })
+        console.log(err);
     }
 }
 
