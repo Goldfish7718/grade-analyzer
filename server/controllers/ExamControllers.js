@@ -80,7 +80,9 @@ export const getExams = async (req, res) => {
             }
         }
 
-        res.json({
+        res
+            .status(200)
+            .json({
             examData,
             totalPercentage,
             totalAchievable,

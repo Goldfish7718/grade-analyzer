@@ -101,7 +101,8 @@ export const signupUser = async (req, res) => {
     res
         .status(200)
         .json({
-            token
+            token,
+            message: 'Login Success'
         })
 
     } catch (err) {
